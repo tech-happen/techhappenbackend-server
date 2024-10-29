@@ -37,6 +37,9 @@ app.use((req, res, next) => {
     res.append("Access-Control-Expose-Headers", "Authorization");
     next();
 });
+app.use(session({ secret: process.env.sessionID, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.get("/", (req, res) => {
     res.send("welcome to the default route, if you get this message then it means you have probably set it u, doesnt mean you wont further experience challenge");
 });
