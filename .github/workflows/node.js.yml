@@ -28,12 +28,9 @@ jobs:
         run: pwd
       - name: Install dependencies
         run: npm ci
-        working-directory: ../../  # Set the working directory
       
       - name: Install additional packages
         run: npm install
-        working-directory: ../../  # Set the working directory
       
       - name: Run server
         run: npm run server
-        working-directory: ../../  # Set the working directory
