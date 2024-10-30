@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
+      - name: check working directory
+        run: pwd
       - name: Install dependencies
         run: npm ci
         working-directory: ../../  # Set the working directory
