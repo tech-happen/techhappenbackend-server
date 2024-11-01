@@ -7,7 +7,7 @@ const { errorHandler } = require("./middleware/errormiddleware");
 const connectDB = require("./config/db");
 const logger = require("./utils/logger");
 const chalk = require("chalk");
-const session = require("express-session");
+const session = require("express-session") ;
 
 const app = express();
 
