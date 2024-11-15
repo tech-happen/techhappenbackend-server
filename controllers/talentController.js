@@ -1,45 +1,34 @@
-const Talent = require('../models/talentModel');
+const TalentProfile = require('../models/talentProfile');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
 
 const saltRounds = 10;
 
+const createProfile = async (req,res) =>{
+  // const {userId,FullName,email,}
 
-const registerTalent = async (req, res) => {
-   try {
-    const { fullName, email, password, dob, gender, nationality, experienceLevel, location, linkedIn, highestQualification, currentStaus, talentRole, portfolioLink, priceRange} = req.body;
-    const existingTalent = await Talent.findOne({ email: email});
-
-    if (existingTalent) {
-      return res.status(409).json({ message: 'Talent already exists.' });
-    }
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const talent = new Talent({
-      fullName, 
-      email, 
-      password:hashedPassword,
-      dob, 
-      gender,
-      nationality,
-      location, 
-      linkedIn, 
-      highestQualification, 
-      currentStaus, 
-      talentRole, 
-      portfolioLink, 
-      priceRange,
-      approved: false,
-      onWaitingList: true
-    });
-
-    await talent.save();
-
-    res.status(201).json({ message: 'Registration successful. You will receive a confirmation email once your profile is approved.' });
-   } catch (error) {
-      console.log(error);
-    res.status(500).json({ message:"Internal server error" });
-   }
+  try {
+    const profile =new TalentProfile({userId : req.user.userId, ...req.body});
+    await profile.save();
+    return res.status(201).json(profile);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({message: 'internal server error'});
+  }
 };
 
-module.exports = registerTalent;
+const getProfile = async (req, res) => {
+  try {
+    const profile = await TalentProfile.findOne({userId: req.query.id});
+    if(!profile) {
+      return res.status(400).json({message: "Profile not found"});
+    }
+      res.status(200).json(profile);
+  
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message: "internal server error"});
+  }
+};
+
+module.exports = {createProfile, getProfile};

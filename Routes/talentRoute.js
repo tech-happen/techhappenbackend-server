@@ -1,10 +1,13 @@
 const express = require('express');
-const registerTalent = require('../controllers/talentController');
+const {createProfile, getProfile} = require('../controllers/talentController');
+const authenticate = require('../middleware/authMiddleware');
+
 // const router = require('express').Router();
 const router = express.Router();
 
 
-router.post('/register', registerTalent);
+router.post('/profile', authenticate, createProfile);
+router.get('/profile/:id', authenticate, getProfile);
 
 
 module.exports = router;

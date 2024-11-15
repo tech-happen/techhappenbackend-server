@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 const USERS = mongoose.Schema(
-    {
-        email: {
-            type: String,
-            required: [true, "please add a your Email "],
+    { 
+        fullName: { type: String, required: true },
+        email: { type: String, required: [true, "please add a your Email "],
         },
-        facebookId: {
-            type: String,
-            required:[true, 'please add your facebook id']
-        }
-
+        password: { type: String, unique: true, required: true },
+        facebookId: { type: String},
+        role: { type: String, enum: ["Admin", "Talent","Recruiter"], required: true},
+        isApproved: { type: Boolean, default: false}
     },
 
     {

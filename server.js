@@ -12,7 +12,8 @@ const session = require('express-session');
 //const passport = require('passport');
 const passport = require('./config/passportConfig');
 //console.log("Passport:", passport);
-const talentRouter = require('./Routes/talentRoute');
+const talentRoute = require('./Routes/talentRoute');
+const user = require('./Routes/user');
 
 const app = express();
 
@@ -52,7 +53,8 @@ app.get("/", (req, res) => {
     res.send("welcome to the default route, if you get this message then it means you have probably set it u, doesnt mean you wont further experience challenge");
 });
 app.use("/api/v1/waitingist", require("./Routes/waitinglist"));
-app.use('/api/v1/talent', talentRouter);
+app.use('/api/v1/talent', talentRoute);
+app.use('/api/v1/user', user)
 // app.use("app/v1/authenticate", require("./Routes/user"))
 app.use(errorHandler);
 

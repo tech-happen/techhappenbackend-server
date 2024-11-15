@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const talentSchema = new Schema({
+const talentProfileSchema = new Schema({
+   userId: { type: mongoose.Schema.Types.ObjectId, ref:'User',required:true},
    fullName: {type : String, required: true},
    email: {type: String, required: true, unique: true},
    password: {type: String, required: true},
@@ -32,8 +33,8 @@ timestamps: true,
 versionKey: false
 });
 
-const Talent = mongoose.model('Talent', talentSchema);
+const TalentProfile = mongoose.model('TalentProfile', talentProfileSchema);
 
-module.exports = Talent;
+module.exports = TalentProfile;
 
 
